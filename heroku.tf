@@ -2,15 +2,12 @@ provider "heroku" {
   version = "~> 2.0"
 }
 
-provider "github" {
-  individual = "true"
-  anonymous = "true"
-}
+provider "github" {}
 
 data "github_release" "release" {
-    repository  = "encoder-decoder-app"
-    owner       = "mombachm"
-    retrieve_by = "latest"
+  repository  = "encoder-decoder-app"
+  owner       = "mombachm"
+  retrieve_by = "latest"
 }
 
 resource "heroku_app" "encoder-decoder-app" {
