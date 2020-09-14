@@ -1,6 +1,8 @@
 import { AbstractCommand } from "./Command";
 import { Terminal } from "terminal-kit";
 import { EncodingType, EncodingTypeNamesMapping } from "../encoders/EncodingType";
+import { FibonnaciEncoder } from "../encoders/FibonnaciEncoder";
+import { Encoder } from "../encoders/Encoder";
 const term: Terminal = require( 'terminal-kit' ).terminal;
 
 export class EncodeCommand extends AbstractCommand {
@@ -52,14 +54,15 @@ export class EncodeCommand extends AbstractCommand {
       ( error: any , input: EncodingType ) => {
           term.green( "\nSelected encoding type: '%s'\n" ,  EncodingTypeNamesMapping[input] ) ;
           this.encodingType = input;
-          this.loadEncoder();
+          const encoder = this.loadEncoder();
+          encoder.encode(this.filePath);
+          term.processExit(1);
       }
     );
   }
 
-  private loadEncoder() {
-    //TODO Create encoders factory
-    process.exit();
+  private loadEncoder(): Encoder {
+    return new FibonnaciEncoder();
   }
 }
 new EncodeCommand(process.argv).execute();

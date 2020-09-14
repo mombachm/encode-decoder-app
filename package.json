@@ -6,7 +6,8 @@
   "scripts": {
     "tsc": "tsc --watch",
     "testa": "echo bosta",
-    "encode": "node source/command/EncodeCommand.js"
+    "encode": "node source/command/EncodeCommand.js",
+    "decode": "node source/command/DecodeCommand.js"
   },
   "author": "",
   "license": "ISC",

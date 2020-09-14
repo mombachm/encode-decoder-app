@@ -12,6 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Command_1 = require("./Command");
 var EncodingType_1 = require("../encoders/EncodingType");
+var FibonnaciEncoder_1 = require("../encoders/FibonnaciEncoder");
 var term = require('terminal-kit').terminal;
 var EncodeCommand = /** @class */ (function (_super) {
     __extends(EncodeCommand, _super);
@@ -56,12 +57,13 @@ var EncodeCommand = /** @class */ (function (_super) {
         term.inputField(function (error, input) {
             term.green("\nSelected encoding type: '%s'\n", EncodingType_1.EncodingTypeNamesMapping[input]);
             _this.encodingType = input;
-            _this.loadEncoder();
+            var encoder = _this.loadEncoder();
+            encoder.encode(_this.filePath);
+            term.processExit(1);
         });
     };
     EncodeCommand.prototype.loadEncoder = function () {
-        //TODO Create encoders factory
-        process.exit();
+        return new FibonnaciEncoder_1.FibonnaciEncoder();
     };
     return EncodeCommand;
 }(Command_1.AbstractCommand));
