@@ -36,6 +36,11 @@ app-root-path@2.1.0:
   resolved "https://registry.yarnpkg.com/app-root-path/-/app-root-path-2.1.0.tgz#98bf6599327ecea199309866e8140368fd2e646a"
   integrity sha1-mL9lmTJ+zqGZMJhm6BQDaP0uZGo=
 
+bitstring@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/bitstring/-/bitstring-1.0.0.tgz#87ec1c676c5c88c9d0fff5d142f12126bd38daa7"
+  integrity sha1-h+wcZ2xciMnQ//XRQvEhJr042qc=
+
 chroma-js@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/chroma-js/-/chroma-js-2.1.0.tgz#c0be48a21fe797ef8965608c1c4f911ef2da49d5"

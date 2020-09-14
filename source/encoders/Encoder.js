@@ -1,3 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var BitString = require('bitstring');
+var Encoder = /** @class */ (function () {
+    function Encoder() {
+        this.fs = require("fs");
+        this.path = require("path");
+        this.term = require('terminal-kit').terminal;
+        this.bitString = new BitString();
+    }
+    Encoder.prototype.readFileData = function (filepath) {
+        return this.fs.readFileSync(filepath).toString();
+    };
+    Encoder.prototype.saveEncodedFileData = function (data, filepath) {
+        var dirname = this.path.dirname(filepath);
+        var filename = this.path.parse(filepath);
+        var distFilepath = dirname + "/" + filename.name + ".cod";
+        this.fs.writeFileSync(distFilepath, data);
+        var stats = this.fs.statSync(distFilepath);
+        var fileSizeInBytes = stats["size"];
+        this.term.green("Encoded file size: " + fileSizeInBytes + " bytes");
+    };
+    Encoder.prototype.saveDecodedFileData = function (data, filepath) {
+        var dirname = this.path.dirname(filepath);
+        var filename = this.path.parse(filepath);
+        var distFilepath = dirname + "/" + filename.name + ".dec";
+        this.fs.writeFileSync(distFilepath, data);
+        var stats = this.fs.statSync(distFilepath);
+        var fileSizeInBytes = stats["size"];
+        this.term.green("Decoded file size: " + fileSizeInBytes + " bytes");
+    };
+    return Encoder;
+}());
+exports.Encoder = Encoder;
 //# sourceMappingURL=Encoder.js.map

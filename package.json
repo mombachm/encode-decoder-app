@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@types/terminal-kit": "^1.28.2",
+    "bitstring": "^1.0.0",
     "terminal-kit": "^1.43.0"
   }
 }

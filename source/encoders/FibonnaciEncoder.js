@@ -1,4 +1,14 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __generator = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
@@ -27,57 +37,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs = require("fs");
-var path = require("path");
-var term = require('terminal-kit').terminal;
-var FibonnaciEncoder = /** @class */ (function () {
+var Encoder_1 = require("./Encoder");
+var FibonnaciEncoder = /** @class */ (function (_super) {
+    __extends(FibonnaciEncoder, _super);
     function FibonnaciEncoder() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-    FibonnaciEncoder.prototype.mod = function (val, n) {
-        return ((val % n) + n) % n;
-    };
-    ;
-    FibonnaciEncoder.prototype.readFileData = function (filepath) {
-        return fs.readFileSync(filepath).toString();
-    };
-    FibonnaciEncoder.prototype.saveEncodedFileData = function (data, filepath) {
-        var dirname = path.dirname(filepath);
-        var filename = path.parse(filepath);
-        var distFilepath = dirname + "/" + filename.name + ".cod";
-        fs.writeFileSync(distFilepath, data);
-        var stats = fs.statSync(distFilepath);
-        var fileSizeInBytes = stats["size"];
-        term.green("Encoded file size: " + fileSizeInBytes + " bytes");
-    };
-    FibonnaciEncoder.prototype.saveDecodedFileData = function (data, filepath) {
-        var dirname = path.dirname(filepath);
-        var filename = path.parse(filepath);
-        var distFilepath = dirname + "/" + filename.name + ".dec";
-        fs.writeFileSync(distFilepath, data);
-        var stats = fs.statSync(distFilepath);
-        var fileSizeInBytes = stats["size"];
-        term.green("Decoded file size: " + fileSizeInBytes + " bytes");
-    };
-    FibonnaciEncoder.prototype.execute = function (data, reverse, cycle) {
+    FibonnaciEncoder.prototype.executeEncoding = function (data, reverse, cycle) {
         if (reverse === void 0) { reverse = false; }
         if (cycle === void 0) { cycle = 10; }
         var sequence = this.fibonacci();
         return Array.from(data).map(function (c, i) {
             var fibonacciValue = Number(sequence.next(i % cycle === 0).value);
-            var val = (c.charCodeAt(0) + (reverse ? -1 : 1) * fibonacciValue);
-            // val = this.mod(val, 255);
+            var val = c.charCodeAt(0) + (reverse ? -1 : 1) * fibonacciValue;
             return val;
         }).map(function (n) { return String.fromCharCode(n); })
             .join('');
     };
     FibonnaciEncoder.prototype.encode = function (filepath) {
         var data = this.readFileData(filepath);
-        var dataEncoded = this.execute(data, false);
+        var dataEncoded = this.executeEncoding(data, false);
         this.saveEncodedFileData(dataEncoded, filepath);
     };
     FibonnaciEncoder.prototype.decode = function (filepath) {
         var data = this.readFileData(filepath);
-        var dataDecoded = this.execute(data, true);
+        var dataDecoded = this.executeEncoding(data, true);
         this.saveDecodedFileData(dataDecoded, filepath);
     };
     FibonnaciEncoder.prototype.fibonacci = function () {
@@ -106,6 +90,6 @@ var FibonnaciEncoder = /** @class */ (function () {
         });
     };
     return FibonnaciEncoder;
-}());
+}(Encoder_1.Encoder));
 exports.FibonnaciEncoder = FibonnaciEncoder;
 //# sourceMappingURL=FibonnaciEncoder.js.map
