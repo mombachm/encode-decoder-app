@@ -7,7 +7,7 @@ var EncoderFactory = /** @class */ (function () {
     }
     EncoderFactory.prototype.make = function (type) {
         switch (type) {
-            case EncodingType_1.EncodingType.Fibonacci:
+            case EncodingType_1.EncodingTypeIndex.Fibonacci:
                 return new FibonnaciEncoder_1.FibonnaciEncoder();
             default:
                 return null;
