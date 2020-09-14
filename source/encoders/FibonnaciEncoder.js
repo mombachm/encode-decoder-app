@@ -29,6 +29,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var path = require("path");
+var term = require('terminal-kit').terminal;
 var FibonnaciEncoder = /** @class */ (function () {
     function FibonnaciEncoder() {
     }
@@ -42,12 +43,20 @@ var FibonnaciEncoder = /** @class */ (function () {
     FibonnaciEncoder.prototype.saveEncodedFileData = function (data, filepath) {
         var dirname = path.dirname(filepath);
         var filename = path.parse(filepath);
-        fs.writeFileSync(dirname + "/" + filename.name + "-encoded", data);
+        var distFilepath = dirname + "/" + filename.name + ".cod";
+        fs.writeFileSync(distFilepath, data);
+        var stats = fs.statSync(distFilepath);
+        var fileSizeInBytes = stats["size"];
+        term.green("Encoded file size: " + fileSizeInBytes + " bytes");
     };
     FibonnaciEncoder.prototype.saveDecodedFileData = function (data, filepath) {
         var dirname = path.dirname(filepath);
         var filename = path.parse(filepath);
-        fs.writeFileSync(dirname + "/" + filename.name + "-decoded", data);
+        var distFilepath = dirname + "/" + filename.name + ".dec";
+        fs.writeFileSync(distFilepath, data);
+        var stats = fs.statSync(distFilepath);
+        var fileSizeInBytes = stats["size"];
+        term.green("Decoded file size: " + fileSizeInBytes + " bytes");
     };
     FibonnaciEncoder.prototype.execute = function (data, reverse, cycle) {
         if (reverse === void 0) { reverse = false; }

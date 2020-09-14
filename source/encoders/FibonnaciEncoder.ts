@@ -1,7 +1,9 @@
+import { Terminal } from "terminal-kit";
 import { Encoder } from "./Encoder";
 
 const fs = require("fs");
 const path = require("path");
+const term: Terminal = require( 'terminal-kit' ).terminal;
 
 export class FibonnaciEncoder implements Encoder {
     private mod (val:number, n: number) {
@@ -15,13 +17,21 @@ export class FibonnaciEncoder implements Encoder {
     private saveEncodedFileData(data: string, filepath: string) {
         const dirname = path.dirname(filepath)
         const filename = path.parse(filepath);
-        fs.writeFileSync(`${dirname}/${filename.name}-encoded`, data);
+        const distFilepath = `${dirname}/${filename.name}.cod`;
+        fs.writeFileSync(distFilepath, data);
+        var stats = fs.statSync(distFilepath)
+        var fileSizeInBytes = stats["size"]
+        term.green(`Encoded file size: ${fileSizeInBytes} bytes`);
     }
 
     private saveDecodedFileData(data: string, filepath: string) {
         const dirname = path.dirname(filepath)
         const filename = path.parse(filepath);
-        fs.writeFileSync(`${dirname}/${filename.name}-decoded`, data);
+        const distFilepath = `${dirname}/${filename.name}.dec`;
+        fs.writeFileSync(distFilepath, data);
+        var stats = fs.statSync(distFilepath)
+        var fileSizeInBytes = stats["size"]
+        term.green(`Decoded file size: ${fileSizeInBytes} bytes`);
     }
 
     private execute(data: string, reverse=false, cycle=10): any {
