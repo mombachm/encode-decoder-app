@@ -1,8 +1,10 @@
 import { AbstractCommand } from "./Command";
 import { Terminal } from "terminal-kit";
 import { EncodingType, EncodingTypeNamesMapping } from "../encoders/EncodingType";
-import { FibonnaciEncoder } from "../encoders/FibonnaciEncoder";
 import { Encoder } from "../encoders/Encoder";
+import { EncoderFactory } from "../encoders/EncoderFactory";
+import { UnaryEncoder } from "../encoders/UnaryEncoder";
+import { FibonnaciEncoder } from "../encoders/FibonnaciEncoder";
 const term: Terminal = require( 'terminal-kit' ).terminal;
 
 export class DecodeCommand extends AbstractCommand {
@@ -32,7 +34,7 @@ export class DecodeCommand extends AbstractCommand {
   }
 
   private loadEncoder(): Encoder {
-    return new FibonnaciEncoder();
+    return new UnaryEncoder();
   }
 }
 new DecodeCommand(process.argv).execute();

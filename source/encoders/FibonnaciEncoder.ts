@@ -14,13 +14,15 @@ export class FibonnaciEncoder extends Encoder {
 
     public encode(filepath: string) {
         const data = this.readFileData(filepath);
-        const dataEncoded = this.executeEncoding(data, false);
+        const dataString = data.toString();
+        const dataEncoded = this.executeEncoding(dataString, false);
         this.saveEncodedFileData(dataEncoded, filepath);
     }
 
     public decode(filepath: string) {
         const data = this.readFileData(filepath);
-        const dataDecoded = this.executeEncoding(data, true);
+        const dataString = data.toString();
+        const dataDecoded = this.executeEncoding(dataString, true);
         this.saveDecodedFileData(dataDecoded, filepath);
     }
 

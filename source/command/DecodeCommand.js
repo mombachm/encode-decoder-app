@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Command_1 = require("./Command");
-var FibonnaciEncoder_1 = require("../encoders/FibonnaciEncoder");
+var UnaryEncoder_1 = require("../encoders/UnaryEncoder");
 var term = require('terminal-kit').terminal;
 var DecodeCommand = /** @class */ (function (_super) {
     __extends(DecodeCommand, _super);
@@ -36,7 +36,7 @@ var DecodeCommand = /** @class */ (function (_super) {
         }
     };
     DecodeCommand.prototype.loadEncoder = function () {
-        return new FibonnaciEncoder_1.FibonnaciEncoder();
+        return new UnaryEncoder_1.UnaryEncoder();
     };
     return DecodeCommand;
 }(Command_1.AbstractCommand));
