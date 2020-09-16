@@ -24,6 +24,8 @@ var EncodeCommand = /** @class */ (function (_super) {
         return _this;
     }
     EncodeCommand.prototype.execute = function () {
+        _super.prototype.execute.call(this);
+        this.showCommandTitle();
         this.showEncodingOptionsTable();
         this.showEncodingTypeSelection();
     };
@@ -34,8 +36,11 @@ var EncodeCommand = /** @class */ (function (_super) {
             process.exit(1);
         }
     };
+    EncodeCommand.prototype.showCommandTitle = function () {
+        term.brightCyan("############## Encoder ##############\n");
+    };
     EncodeCommand.prototype.showEncodingOptionsTable = function () {
-        term.green("These are the available encoding options:\n");
+        term.brightCyan("\nThese are the available encoding options:\n");
         term.table([
             ['Options', 'Encoding Types'],
             ['Golomb', EncodingType_1.EncodingTypeIndex.Golomb],
@@ -53,9 +58,9 @@ var EncodeCommand = /** @class */ (function (_super) {
     };
     EncodeCommand.prototype.showEncodingTypeSelection = function () {
         var _this = this;
-        term.yellow("Select a encoding type to start the encoding process:\n");
+        term.brightMagenta("Select a encoding type to start the encoding process:\n");
         term.inputField(function (error, input) {
-            term.green("\nSelected encoding type: '%s'\n", EncodingType_1.EncodingTypeNamesMapping[input]);
+            term.brightMagenta("\nSelected encoding type: '%s'\n", EncodingType_1.EncodingTypeNamesMapping[input]);
             _this.encodingType = EncodingType_1.EncodingTypeNamesMapping[input];
             var encoder = _this.loadEncoder();
             if (!encoder) {
@@ -63,7 +68,7 @@ var EncodeCommand = /** @class */ (function (_super) {
                 term.processExit(1);
                 process.exit(1);
             }
-            term.green("\nEncoding started... '%s'\n", EncodingType_1.EncodingTypeNamesMapping[input]);
+            term.brightCyan("\nEncoding started... '%s'\n", EncodingType_1.EncodingTypeNamesMapping[input]);
             encoder.encode(_this.filePath);
             term.processExit(0);
         });
@@ -75,5 +80,12 @@ var EncodeCommand = /** @class */ (function (_super) {
     return EncodeCommand;
 }(Command_1.AbstractCommand));
 exports.EncodeCommand = EncodeCommand;
-new EncodeCommand(process.argv).execute();
+try {
+    new EncodeCommand(process.argv).execute();
+}
+catch (error) {
+    term.red("Error during encoding.\n");
+    term.processExit(1);
+    process.exit(1);
+}
 //# sourceMappingURL=EncodeCommand.js.map

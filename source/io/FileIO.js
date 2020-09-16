@@ -23,7 +23,9 @@ var FileIO = /** @class */ (function () {
         this.fs.writeFileSync(distFilepath, data);
         var stats = this.fs.statSync(distFilepath);
         var fileSizeInBytes = stats["size"];
-        this.term.green("Encoded file size: " + fileSizeInBytes + " bytes\n");
+        this.term.brightCyan("Encoded file size: " + fileSizeInBytes + " bytes\n");
+        this.term.brightGreen("File encoded with success.\n");
+        this.term.brightGreen("Encoded file saved. Path: " + distFilepath + "\n");
     };
     FileIO.prototype.saveDecodedFileData = function (data, filepath) {
         var dirname = this.path.dirname(filepath);
@@ -32,13 +34,15 @@ var FileIO = /** @class */ (function () {
         this.fs.writeFileSync(distFilepath, data);
         var stats = this.fs.statSync(distFilepath);
         var fileSizeInBytes = stats["size"];
-        // this.term.green(`\n\n${data}\n\n`);
-        this.term.green("Decoded file size: " + fileSizeInBytes + " bytes\n");
+        // this.term.brightGreen(`\n\n${data}\n\n`);
+        this.term.brightCyan("Decoded file size: " + fileSizeInBytes + " bytes\n");
+        this.term.brightGreen("File decoded with success.\n");
+        this.term.brightGreen("Decoded file saved. Path: " + distFilepath + "\n");
     };
     FileIO.prototype.readFileData = function (filepath) {
         var stats = this.fs.statSync(filepath);
         var fileSizeInBytes = stats["size"];
-        this.term.green("Input file size: " + fileSizeInBytes + " bytes\n");
+        this.term.bold("Input file size: " + fileSizeInBytes + " bytes\n");
         return Array.from(this.fs.readFileSync(filepath, 'utf8'));
     };
     FileIO.prototype.loadHeaderConfigs = function (fileData) {

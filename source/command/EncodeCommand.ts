@@ -17,6 +17,8 @@ export class EncodeCommand extends AbstractCommand {
   }
 
   public execute(): void {
+    super.execute();
+    this.showCommandTitle();
     this.showEncodingOptionsTable();
     this.showEncodingTypeSelection();
   }
@@ -29,8 +31,12 @@ export class EncodeCommand extends AbstractCommand {
     }
   }
 
+  private showCommandTitle() {
+    term.brightCyan(`############## Encoder ##############\n`);
+  }
+
   private showEncodingOptionsTable() {
-    term.green("These are the available encoding options:\n");
+    term.brightCyan("\nThese are the available encoding options:\n");
     (<any>term).table( [
         [ 'Options' , 'Encoding Types' ] ,
         [ 'Golomb' , EncodingTypeIndex.Golomb ] ,
@@ -49,10 +55,10 @@ export class EncodeCommand extends AbstractCommand {
   }
 
   private showEncodingTypeSelection() {
-    term.yellow("Select a encoding type to start the encoding process:\n")
+    term.brightMagenta("Select a encoding type to start the encoding process:\n")
     term.inputField(
       ( error: any , input: EncodingType ) => {
-          term.green( "\nSelected encoding type: '%s'\n" ,  EncodingTypeNamesMapping[input] ) ;
+          term.brightMagenta( "\nSelected encoding type: '%s'\n" ,  EncodingTypeNamesMapping[input] ) ;
           this.encodingType = EncodingTypeNamesMapping[input];
           const encoder = this.loadEncoder();
           if (!encoder) {
@@ -60,7 +66,7 @@ export class EncodeCommand extends AbstractCommand {
             term.processExit(1);
             process.exit(1);
           }
-          term.green( "\nEncoding started... '%s'\n" ,  EncodingTypeNamesMapping[input] ) ;
+          term.brightCyan( "\nEncoding started... '%s'\n" ,  EncodingTypeNamesMapping[input] ) ;
           encoder!.encode(this.filePath);
           term.processExit(0);
       }
@@ -72,4 +78,10 @@ export class EncodeCommand extends AbstractCommand {
     return new EncoderFactory().make(this.encodingType, fileData);
   }
 }
-new EncodeCommand(process.argv).execute();
+try {
+  new EncodeCommand(process.argv).execute();
+} catch(error) {
+  term.red("Error during encoding.\n");
+  term.processExit(1);
+  process.exit(1);
+}

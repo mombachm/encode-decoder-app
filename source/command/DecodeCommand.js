@@ -23,6 +23,8 @@ var DecodeCommand = /** @class */ (function (_super) {
         return _this;
     }
     DecodeCommand.prototype.execute = function () {
+        _super.prototype.execute.call(this);
+        this.showCommandTitle();
         var encoder = this.loadEncoder();
         if (!encoder) {
             term.red("Invalid encoding type.");
@@ -30,15 +32,18 @@ var DecodeCommand = /** @class */ (function (_super) {
             process.exit(1);
         }
         encoder.decode(this.filePath);
-        term.green("File decoded with success.\n");
         term.processExit(0);
     };
     DecodeCommand.prototype.verifyFilePath = function () {
         if (!this.filePath) {
             term.red("The specified file path is invalid for decoding.\n");
             term.yellow("Usage: yarn decode [FILE PATH]");
+            term.processExit(1);
             process.exit(1);
         }
+    };
+    DecodeCommand.prototype.showCommandTitle = function () {
+        term.brightCyan("############## Decoder ##############\n");
     };
     DecodeCommand.prototype.loadEncoder = function () {
         var fileIO = new FileIO_1.FileIO();
@@ -50,12 +55,19 @@ var DecodeCommand = /** @class */ (function (_super) {
             process.exit(1);
         }
         this.encodingType = headerConfigs.encodingType;
-        term.green("\nFile encoding type: '%s'\n", this.encodingType);
-        term.green("\nDecoding started...\n");
+        term.brightMagenta("\nFile encoding type: '%s'\n", this.encodingType);
+        term.brightCyan("\nDecoding started...\n");
         return new EncoderFactory_1.EncoderFactory().make(this.encodingType, fileData);
     };
     return DecodeCommand;
 }(Command_1.AbstractCommand));
 exports.DecodeCommand = DecodeCommand;
-new DecodeCommand(process.argv).execute();
+try {
+    new DecodeCommand(process.argv).execute();
+}
+catch (error) {
+    term.red("Error during decoding.\n");
+    term.processExit(1);
+    process.exit(1);
+}
 //# sourceMappingURL=DecodeCommand.js.map

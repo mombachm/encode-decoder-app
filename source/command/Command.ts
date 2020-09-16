@@ -1,4 +1,6 @@
+import { Terminal } from "terminal-kit";
 import Message from "../utils/messages/MessageConstants";
+const term: Terminal = require( 'terminal-kit' ).terminal;
 
 export interface Command {
   execute(): void;
@@ -31,6 +33,7 @@ export abstract class AbstractCommand implements Command {
   }
 
   public execute(): void {
+    term.brightCyan(`#####################################\n`);
     if(this.hasNextCommand()) {
       this.nextCommand.execute();
     }

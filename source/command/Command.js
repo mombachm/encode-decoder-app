@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var term = require('terminal-kit').terminal;
 var AbstractCommand = /** @class */ (function () {
     function AbstractCommand(commandArguments) {
         commandArguments.splice(0, 2);
@@ -18,6 +19,7 @@ var AbstractCommand = /** @class */ (function () {
         return Boolean(this.nextCommand);
     };
     AbstractCommand.prototype.execute = function () {
+        term.brightCyan("#####################################\n");
         if (this.hasNextCommand()) {
             this.nextCommand.execute();
         }

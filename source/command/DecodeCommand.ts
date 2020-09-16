@@ -20,6 +20,8 @@ export class DecodeCommand extends AbstractCommand {
   }
 
   public execute(): void {
+    super.execute();
+    this.showCommandTitle();
     const encoder = this.loadEncoder();
     if (!encoder) {
       term.red( "Invalid encoding type." ) ;
@@ -27,7 +29,6 @@ export class DecodeCommand extends AbstractCommand {
       process.exit(1);
     }
     encoder!.decode(this.filePath);
-    term.green("File decoded with success.\n");
     term.processExit(0);
   }
 
@@ -35,8 +36,13 @@ export class DecodeCommand extends AbstractCommand {
     if (!this.filePath) {
       term.red("The specified file path is invalid for decoding.\n");
       term.yellow("Usage: yarn decode [FILE PATH]");
+      term.processExit(1);
       process.exit(1);
     }
+  }
+
+  private showCommandTitle() {
+    term.brightCyan(`############## Decoder ##############\n`);
   }
 
   private loadEncoder(): Encoder | null {
@@ -49,10 +55,16 @@ export class DecodeCommand extends AbstractCommand {
       process.exit(1);
     }
     this.encodingType = headerConfigs!.encodingType;
-    term.green( "\nFile encoding type: '%s'\n" ,  this.encodingType );
-    term.green( "\nDecoding started...\n" ) ;
+    term.brightMagenta( "\nFile encoding type: '%s'\n" ,  this.encodingType );
+    term.brightCyan( "\nDecoding started...\n" ) ;
     return new EncoderFactory().make(this.encodingType, fileData);
   }
 
 }
-new DecodeCommand(process.argv).execute();
+try {
+  new DecodeCommand(process.argv).execute();
+} catch(error) {
+  term.red("Error during decoding.\n");
+  term.processExit(1);
+  process.exit(1);
+}
