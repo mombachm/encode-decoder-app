@@ -1,21 +1,23 @@
-import { StringDecoder } from "string_decoder";
 import { Encoder } from "./Encoder";
+import { EncodingType } from "./EncodingType";
 
 export class UnaryEncoder extends Encoder {
 
     public encode(filepath: string) {
-        const data = this.readFileData(filepath);
-        const dataEncoded = this.executeEncoding(data);
-        this.saveEncodedFileData(dataEncoded, filepath);
+        const dataEncoded = this.executeEncoding(this.inputData);
+        const headerConfigs = {
+            encodingType: EncodingType.Unary,
+            divider: 0
+        };
+        this.saveEncodedFileData(dataEncoded, filepath, headerConfigs);
     }
 
     public decode(filepath: string) {
-        const data = this.readFileData(filepath);
-        const dataDecoded = this.executeDecoding(data);
+        const dataDecoded = this.executeDecoding(this.inputData);
         this.saveDecodedFileData(dataDecoded, filepath);
     }
-    
-    private executeEncoding(data: Array<string>): string {
+
+    private executeEncoding(data: string[]): string {
         let stringBuffer = "";
         Array.from(data).forEach((char: string) => {
             if (char) {
@@ -34,7 +36,7 @@ export class UnaryEncoder extends Encoder {
         return encodingBuffer;
     }
 
-    private executeDecoding(data: Array<string>): string {
+    private executeDecoding(data: string[]): string {
         let stringEncodedBuffer = "";
         data.forEach((encodedChar: string) => {
             const charValue = encodedChar.charCodeAt(0); 

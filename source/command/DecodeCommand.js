@@ -11,7 +11,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Command_1 = require("./Command");
-var UnaryEncoder_1 = require("../encoders/UnaryEncoder");
+var EncoderFactory_1 = require("../encoders/EncoderFactory");
+var FileIO_1 = require("../io/FileIO");
 var term = require('terminal-kit').terminal;
 var DecodeCommand = /** @class */ (function (_super) {
     __extends(DecodeCommand, _super);
@@ -23,20 +24,35 @@ var DecodeCommand = /** @class */ (function (_super) {
     }
     DecodeCommand.prototype.execute = function () {
         var encoder = this.loadEncoder();
+        if (!encoder) {
+            term.red("Invalid encoding type.");
+            term.processExit(1);
+            process.exit(1);
+        }
         encoder.decode(this.filePath);
         term.green("File decoded with success.\n");
         term.processExit(0);
     };
     DecodeCommand.prototype.verifyFilePath = function () {
         if (!this.filePath) {
-            console.log("aqui");
             term.red("The specified file path is invalid for decoding.\n");
             term.yellow("Usage: yarn decode [FILE PATH]");
             process.exit(1);
         }
     };
     DecodeCommand.prototype.loadEncoder = function () {
-        return new UnaryEncoder_1.UnaryEncoder();
+        var fileIO = new FileIO_1.FileIO();
+        var fileData = fileIO.readFileDataForDecoding(this.filePath);
+        var headerConfigs = fileIO.getHeaderConfigs();
+        if (!headerConfigs.encodingType) {
+            term.red("Invalid header configuration.");
+            term.processExit(1);
+            process.exit(1);
+        }
+        this.encodingType = headerConfigs.encodingType;
+        term.green("\nFile encoding type: '%s'\n", this.encodingType);
+        term.green("\nDecoding started...\n");
+        return new EncoderFactory_1.EncoderFactory().make(this.encodingType, fileData);
     };
     return DecodeCommand;
 }(Command_1.AbstractCommand));

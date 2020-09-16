@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Encoder_1 = require("./Encoder");
+var EncodingType_1 = require("./EncodingType");
 var FibonnaciEncoder = /** @class */ (function (_super) {
     __extends(FibonnaciEncoder, _super);
     function FibonnaciEncoder() {
@@ -55,13 +56,15 @@ var FibonnaciEncoder = /** @class */ (function (_super) {
             .join('');
     };
     FibonnaciEncoder.prototype.encode = function (filepath) {
-        var data = this.readFileData(filepath);
-        var dataEncoded = this.executeEncoding(data, false);
-        this.saveEncodedFileData(dataEncoded, filepath);
+        var dataEncoded = this.executeEncoding(this.inputData, false);
+        var headerConfigs = {
+            encodingType: EncodingType_1.EncodingType.Fibonacci,
+            divider: 0
+        };
+        this.saveEncodedFileData(dataEncoded, filepath, headerConfigs);
     };
     FibonnaciEncoder.prototype.decode = function (filepath) {
-        var data = this.readFileData(filepath);
-        var dataDecoded = this.executeEncoding(data, true);
+        var dataDecoded = this.executeEncoding(this.inputData, true);
         this.saveDecodedFileData(dataDecoded, filepath);
     };
     FibonnaciEncoder.prototype.fibonacci = function () {

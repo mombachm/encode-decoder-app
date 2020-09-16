@@ -1,15 +1,15 @@
 import { Encoder } from "./Encoder";
-import { EncodingType, EncodingTypeIndex } from "./EncodingType";
+import { EncodingType } from "./EncodingType";
 import { FibonnaciEncoder } from "./FibonnaciEncoder";
 import { UnaryEncoder } from "./UnaryEncoder";
 
 export class EncoderFactory {
-    make(type: EncodingType): Encoder | null {
+    make(type: EncodingType, inputData: string[]): Encoder | null {
         switch(type) {
-            case EncodingTypeIndex.Fibonacci:
-                return new FibonnaciEncoder();
-            case EncodingTypeIndex.Unary:
-                return new UnaryEncoder();
+            case EncodingType.Fibonacci:
+                return new FibonnaciEncoder(inputData);
+            case EncodingType.Unary:
+                return new UnaryEncoder(inputData);
             default:
                 return null;
         }

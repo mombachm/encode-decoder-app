@@ -5,16 +5,16 @@ var EncodingType;
 (function (EncodingType) {
     EncodingType["Fibonacci"] = "Fibonacci";
     EncodingType["Golomb"] = "Golomb";
-    EncodingType["EliasGamma"] = "Elias-Gamma";
+    EncodingType["EliasGamma"] = "EliasGamma";
     EncodingType["Unary"] = "Unary";
     EncodingType["Delta"] = "Delta";
 })(EncodingType = exports.EncodingType || (exports.EncodingType = {}));
 exports.EncodingTypeIndex = (_a = {},
-    _a[EncodingType.Fibonacci] = "1",
-    _a[EncodingType.Golomb] = "2",
-    _a[EncodingType.EliasGamma] = "3",
-    _a[EncodingType.Unary] = "4",
-    _a[EncodingType.Delta] = "5",
+    _a[EncodingType.Golomb] = "0",
+    _a[EncodingType.EliasGamma] = "1",
+    _a[EncodingType.Fibonacci] = "2",
+    _a[EncodingType.Unary] = "3",
+    _a[EncodingType.Delta] = "4",
     _a);
 exports.EncodingTypeNamesMapping = (_b = {},
     _b[exports.EncodingTypeIndex[EncodingType.Fibonacci]] = EncodingType.Fibonacci,

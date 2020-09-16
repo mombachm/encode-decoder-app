@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc --watch",
-    "testa": "echo bosta",
     "encode": "node source/command/EncodeCommand.js",
     "decode": "node source/command/DecodeCommand.js"
   },
@@ -15,11 +14,10 @@
     "@types/node": "8.5.5",
     "app-root-path": "2.1.0",
     "nodemailer": "4.6.8",
-    "typescript": "2.9.2"
+    "typescript": "^2.9.2"
   },
   "dependencies": {
     "@types/terminal-kit": "^1.28.2",
-    "bitstring": "^1.0.0",
     "terminal-kit": "^1.43.0"
   }
 }

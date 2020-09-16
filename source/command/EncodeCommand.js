@@ -13,6 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Command_1 = require("./Command");
 var EncodingType_1 = require("../encoders/EncodingType");
 var EncoderFactory_1 = require("../encoders/EncoderFactory");
+var FileIO_1 = require("../io/FileIO");
 var term = require('terminal-kit').terminal;
 var EncodeCommand = /** @class */ (function (_super) {
     __extends(EncodeCommand, _super);
@@ -28,7 +29,6 @@ var EncodeCommand = /** @class */ (function (_super) {
     };
     EncodeCommand.prototype.verifyFilePath = function () {
         if (!this.filePath) {
-            console.log("aqui");
             term.red("The specified file path is invalid for encoding.\n");
             term.yellow("Usage: yarn encode [FILE PATH]");
             process.exit(1);
@@ -38,11 +38,11 @@ var EncodeCommand = /** @class */ (function (_super) {
         term.green("These are the available encoding options:\n");
         term.table([
             ['Options', 'Encoding Types'],
-            ['Fibonacci', '1'],
-            ['Golomb', '2'],
-            ['Elias-Gamma', '3'],
-            ['Unária', '4'],
-            ['Delta', '5']
+            ['Golomb', EncodingType_1.EncodingTypeIndex.Golomb],
+            ['Elias-Gamma', EncodingType_1.EncodingTypeIndex.EliasGamma],
+            ['Fibonacci', EncodingType_1.EncodingTypeIndex.Fibonacci],
+            ['Unary', EncodingType_1.EncodingTypeIndex.Unary],
+            ['Delta', EncodingType_1.EncodingTypeIndex.Delta]
         ], {
             hasBorder: true,
             contentHasMarkup: true,
@@ -56,19 +56,21 @@ var EncodeCommand = /** @class */ (function (_super) {
         term.yellow("Select a encoding type to start the encoding process:\n");
         term.inputField(function (error, input) {
             term.green("\nSelected encoding type: '%s'\n", EncodingType_1.EncodingTypeNamesMapping[input]);
-            _this.encodingType = input;
+            _this.encodingType = EncodingType_1.EncodingTypeNamesMapping[input];
             var encoder = _this.loadEncoder();
             if (!encoder) {
                 term.red("Invalid encoding type.");
                 term.processExit(1);
                 process.exit(1);
             }
+            term.green("\nEncoding started... '%s'\n", EncodingType_1.EncodingTypeNamesMapping[input]);
             encoder.encode(_this.filePath);
             term.processExit(0);
         });
     };
     EncodeCommand.prototype.loadEncoder = function () {
-        return new EncoderFactory_1.EncoderFactory().make(this.encodingType);
+        var fileData = new FileIO_1.FileIO().readFileDataForEncoding(this.filePath);
+        return new EncoderFactory_1.EncoderFactory().make(this.encodingType, fileData);
     };
     return EncodeCommand;
 }(Command_1.AbstractCommand));

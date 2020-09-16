@@ -1,8 +1,9 @@
 import { AbstractCommand } from "./Command";
 import { Terminal } from "terminal-kit";
-import { EncodingType, EncodingTypeNamesMapping } from "../encoders/EncodingType";
+import { EncodingType, EncodingTypeIndex, EncodingTypeNamesMapping } from "../encoders/EncodingType";
 import { Encoder } from "../encoders/Encoder";
 import { EncoderFactory } from "../encoders/EncoderFactory";
+import { FileIO } from "../io/FileIO";
 const term: Terminal = require( 'terminal-kit' ).terminal;
 
 export class EncodeCommand extends AbstractCommand {
@@ -22,7 +23,6 @@ export class EncodeCommand extends AbstractCommand {
 
   private verifyFilePath() {
     if (!this.filePath) {
-      console.log("aqui");
       term.red("The specified file path is invalid for encoding.\n");
       term.yellow("Usage: yarn encode [FILE PATH]");
       process.exit(1);
@@ -33,11 +33,11 @@ export class EncodeCommand extends AbstractCommand {
     term.green("These are the available encoding options:\n");
     (<any>term).table( [
         [ 'Options' , 'Encoding Types' ] ,
-        [ 'Fibonacci' , '1'] ,
-        [ 'Golomb' , '2' ] ,
-        [ 'Elias-Gamma' , '3' ] ,
-        [ 'Unária' , '4' ],
-        [ 'Delta' , '5' ]
+        [ 'Golomb' , EncodingTypeIndex.Golomb ] ,
+        [ 'Elias-Gamma' , EncodingTypeIndex.EliasGamma ] ,
+        [ 'Fibonacci' , EncodingTypeIndex.Fibonacci] ,
+        [ 'Unary' , EncodingTypeIndex.Unary ],
+        [ 'Delta' , EncodingTypeIndex.Delta ]
       ] , {
           hasBorder: true ,
           contentHasMarkup: true ,
@@ -53,13 +53,14 @@ export class EncodeCommand extends AbstractCommand {
     term.inputField(
       ( error: any , input: EncodingType ) => {
           term.green( "\nSelected encoding type: '%s'\n" ,  EncodingTypeNamesMapping[input] ) ;
-          this.encodingType = input;
+          this.encodingType = EncodingTypeNamesMapping[input];
           const encoder = this.loadEncoder();
           if (!encoder) {
             term.red( "Invalid encoding type." ) ;
             term.processExit(1);
             process.exit(1);
           }
+          term.green( "\nEncoding started... '%s'\n" ,  EncodingTypeNamesMapping[input] ) ;
           encoder!.encode(this.filePath);
           term.processExit(0);
       }
@@ -67,7 +68,8 @@ export class EncodeCommand extends AbstractCommand {
   }
 
   private loadEncoder(): Encoder | null {
-    return new EncoderFactory().make(this.encodingType);
+    const fileData = new FileIO().readFileDataForEncoding(this.filePath);
+    return new EncoderFactory().make(this.encodingType, fileData);
   }
 }
 new EncodeCommand(process.argv).execute();

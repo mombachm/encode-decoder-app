@@ -6,12 +6,12 @@ var UnaryEncoder_1 = require("./UnaryEncoder");
 var EncoderFactory = /** @class */ (function () {
     function EncoderFactory() {
     }
-    EncoderFactory.prototype.make = function (type) {
+    EncoderFactory.prototype.make = function (type, inputData) {
         switch (type) {
-            case EncodingType_1.EncodingTypeIndex.Fibonacci:
-                return new FibonnaciEncoder_1.FibonnaciEncoder();
-            case EncodingType_1.EncodingTypeIndex.Unary:
-                return new UnaryEncoder_1.UnaryEncoder();
+            case EncodingType_1.EncodingType.Fibonacci:
+                return new FibonnaciEncoder_1.FibonnaciEncoder(inputData);
+            case EncodingType_1.EncodingType.Unary:
+                return new UnaryEncoder_1.UnaryEncoder(inputData);
             default:
                 return null;
         }

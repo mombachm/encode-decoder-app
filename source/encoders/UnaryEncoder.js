@@ -11,19 +11,22 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Encoder_1 = require("./Encoder");
+var EncodingType_1 = require("./EncodingType");
 var UnaryEncoder = /** @class */ (function (_super) {
     __extends(UnaryEncoder, _super);
     function UnaryEncoder() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     UnaryEncoder.prototype.encode = function (filepath) {
-        var data = this.readFileData(filepath);
-        var dataEncoded = this.executeEncoding(data);
-        this.saveEncodedFileData(dataEncoded, filepath);
+        var dataEncoded = this.executeEncoding(this.inputData);
+        var headerConfigs = {
+            encodingType: EncodingType_1.EncodingType.Unary,
+            divider: 0
+        };
+        this.saveEncodedFileData(dataEncoded, filepath, headerConfigs);
     };
     UnaryEncoder.prototype.decode = function (filepath) {
-        var data = this.readFileData(filepath);
-        var dataDecoded = this.executeDecoding(data);
+        var dataDecoded = this.executeDecoding(this.inputData);
         this.saveDecodedFileData(dataDecoded, filepath);
     };
     UnaryEncoder.prototype.executeEncoding = function (data) {
