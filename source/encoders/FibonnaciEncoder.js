@@ -56,14 +56,12 @@ var FibonnaciEncoder = /** @class */ (function (_super) {
     };
     FibonnaciEncoder.prototype.encode = function (filepath) {
         var data = this.readFileData(filepath);
-        var dataString = data.toString();
-        var dataEncoded = this.executeEncoding(dataString, false);
+        var dataEncoded = this.executeEncoding(data, false);
         this.saveEncodedFileData(dataEncoded, filepath);
     };
     FibonnaciEncoder.prototype.decode = function (filepath) {
         var data = this.readFileData(filepath);
-        var dataString = data.toString();
-        var dataDecoded = this.executeEncoding(dataString, true);
+        var dataDecoded = this.executeEncoding(data, true);
         this.saveDecodedFileData(dataDecoded, filepath);
     };
     FibonnaciEncoder.prototype.fibonacci = function () {

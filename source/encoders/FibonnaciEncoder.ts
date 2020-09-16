@@ -2,7 +2,7 @@ import { Encoder } from "./Encoder";
 
 export class FibonnaciEncoder extends Encoder {
 
-    private executeEncoding(data: string, reverse=false, cycle=10): any {
+    private executeEncoding(data: Array<string>, reverse=false, cycle=10): any {
         let sequence = this.fibonacci();    
         return Array.from(data).map((c: string, i) => {
             const fibonacciValue = Number(sequence.next(i % cycle === 0).value);
@@ -14,15 +14,13 @@ export class FibonnaciEncoder extends Encoder {
 
     public encode(filepath: string) {
         const data = this.readFileData(filepath);
-        const dataString = data.toString();
-        const dataEncoded = this.executeEncoding(dataString, false);
+        const dataEncoded = this.executeEncoding(data, false);
         this.saveEncodedFileData(dataEncoded, filepath);
     }
 
     public decode(filepath: string) {
         const data = this.readFileData(filepath);
-        const dataString = data.toString();
-        const dataDecoded = this.executeEncoding(dataString, true);
+        const dataDecoded = this.executeEncoding(data, true);
         this.saveDecodedFileData(dataDecoded, filepath);
     }
 
