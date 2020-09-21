@@ -75,7 +75,11 @@ var EncodeCommand = /** @class */ (function (_super) {
     };
     EncodeCommand.prototype.loadEncoder = function () {
         var fileData = new FileIO_1.FileIO().readFileDataForEncoding(this.filePath);
-        return new EncoderFactory_1.EncoderFactory().make(this.encodingType, fileData);
+        var headerConfigs = {
+            encodingType: this.encodingType,
+            divider: 10
+        };
+        return new EncoderFactory_1.EncoderFactory().make(headerConfigs, fileData);
     };
     return EncodeCommand;
 }(Command_1.AbstractCommand));

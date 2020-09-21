@@ -75,7 +75,11 @@ export class EncodeCommand extends AbstractCommand {
 
   private loadEncoder(): Encoder | null {
     const fileData = new FileIO().readFileDataForEncoding(this.filePath);
-    return new EncoderFactory().make(this.encodingType, fileData);
+    const headerConfigs = {
+        encodingType: this.encodingType,
+        divider: 10
+    };
+    return new EncoderFactory().make(headerConfigs, fileData);
   }
 }
 try {

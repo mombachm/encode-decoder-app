@@ -29,7 +29,7 @@ export class UnaryEncoder extends Encoder {
         let encodingBuffer = "";
         for (let index=0; index < stringBuffer.length - 1; index+=8) {
             const byteString = stringBuffer.substring(index, index+8);
-            const byteStringFixedSize = this.byteStringToFixedSize(byteString);
+            const byteStringFixedSize = this.byteStringToFixedSizeZerosLeft(byteString);
             let byteEncoded = parseInt(byteStringFixedSize,2);
             encodingBuffer += String.fromCharCode(byteEncoded);
         }

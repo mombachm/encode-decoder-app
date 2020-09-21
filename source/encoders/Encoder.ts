@@ -28,23 +28,23 @@ export abstract class Encoder {
         return this.fileIO.saveDecodedFileData(data, filepath);
     }
 
-    protected byteStringToFixedSizeFromNumber(n: number) {
+    protected byteStringToFixedSizeFromNumber(n: number, size: number = 8) {
         if (n < 0 || n > 255 || n % 1 !== 0) {
             throw new Error(n + " does not fit in a byte");
         }
-        return this.byteStringToFixedSizeZerosLeft(n.toString(2));
+        return this.byteStringToFixedSizeZerosLeft(n.toString(2), size);
     }
 
-    protected byteStringToFixedSize(byte: string) {
-        if (byte.length < 8) {
-            return byte + "0".repeat(8 - byte.length);
-        }
-        return byte;
-    }
+    // protected byteStringToFixedSize(byte: string, size: number = 8) {
+    //     if (byte.length < size) {
+    //         return byte + "0".repeat(8 - byte.length);
+    //     }
+    //     return byte;
+    // }
 
-    protected byteStringToFixedSizeZerosLeft(byte: string) {
-        if (byte.length < 8) {
-            return "0".repeat(8 - byte.length) + byte;
+    protected byteStringToFixedSizeZerosLeft(byte: string, size: number = 8) {
+        if (byte.length < size) {
+            return "0".repeat(size - byte.length) + byte;
         }
         return byte;
     }

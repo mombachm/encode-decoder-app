@@ -57,7 +57,7 @@ export class DecodeCommand extends AbstractCommand {
     this.encodingType = headerConfigs!.encodingType;
     term.brightMagenta( "\nFile encoding type: '%s'\n" ,  this.encodingType );
     term.brightCyan( "\nDecoding started...\n" ) ;
-    return new EncoderFactory().make(this.encodingType, fileData);
+    return new EncoderFactory().make(headerConfigs, fileData);
   }
 
 }
