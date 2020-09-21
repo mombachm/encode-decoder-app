@@ -78,7 +78,7 @@ var GolombEncoder = /** @class */ (function (_super) {
         stringEncodedBuffer = this.removeUnneededEndZeros(stringEncodedBuffer);
         var stringDecodedBuffer = "";
         var unaryCounter = 0;
-        for (var index = 0; index < stringEncodedBuffer.length - 1; index += 1) {
+        for (var index = 0; index < stringEncodedBuffer.length; index += 1) {
             if (stringEncodedBuffer[index] === "0") {
                 var quocient = unaryCounter;
                 var k = Math.ceil(Math.log2(divider));

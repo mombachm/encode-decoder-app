@@ -55,7 +55,7 @@ var DecodeCommand = /** @class */ (function (_super) {
             process.exit(1);
         }
         this.encodingType = headerConfigs.encodingType;
-        term.brightMagenta("\nFile encoding type: '%s'\n", this.encodingType);
+        term.brightMagenta("\nFile encoding type detected: '%s'\n", this.encodingType);
         term.brightCyan("\nDecoding started...\n");
         return new EncoderFactory_1.EncoderFactory().make(headerConfigs, fileData);
     };

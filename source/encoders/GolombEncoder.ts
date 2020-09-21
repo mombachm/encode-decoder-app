@@ -1,4 +1,3 @@
-import { HeaderConfigs } from "source/io/FileIO";
 import { Encoder } from "./Encoder";
 import { EncodingType } from "./EncodingType";
 
@@ -67,7 +66,7 @@ export class GolombEncoder extends Encoder {
         let stringDecodedBuffer = "";
 
         let unaryCounter = 0;
-        for (let index=0; index < stringEncodedBuffer.length - 1; index+=1) {
+        for (let index=0; index < stringEncodedBuffer.length; index+=1) {
             if (stringEncodedBuffer[index] === "0") {
                 const quocient = unaryCounter;
                 const k = Math.ceil(Math.log2(divider));

@@ -1,4 +1,5 @@
 import { HeaderConfigs } from "source/io/FileIO";
+import { DeltaEncoder } from "./DeltaEncoder";
 import { Encoder } from "./Encoder";
 import { EncodingType } from "./EncodingType";
 import { FibonnaciEncoder } from "./FibonnaciEncoder";
@@ -14,6 +15,8 @@ export class EncoderFactory {
                 return new UnaryEncoder(inputData);
             case EncodingType.Golomb:
                 return new GolombEncoder(inputData, headerConfigs.divider);
+            case EncodingType.Delta:
+                return new DeltaEncoder(inputData);
             default:
                 return null;
         }

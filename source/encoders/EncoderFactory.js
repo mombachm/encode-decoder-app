@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var DeltaEncoder_1 = require("./DeltaEncoder");
 var EncodingType_1 = require("./EncodingType");
 var FibonnaciEncoder_1 = require("./FibonnaciEncoder");
 var GolombEncoder_1 = require("./GolombEncoder");
@@ -15,6 +16,8 @@ var EncoderFactory = /** @class */ (function () {
                 return new UnaryEncoder_1.UnaryEncoder(inputData);
             case EncodingType_1.EncodingType.Golomb:
                 return new GolombEncoder_1.GolombEncoder(inputData, headerConfigs.divider);
+            case EncodingType_1.EncodingType.Delta:
+                return new DeltaEncoder_1.DeltaEncoder(inputData);
             default:
                 return null;
         }
