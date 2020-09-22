@@ -11,6 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Command_1 = require("./Command");
+var EncodingType_1 = require("../encoders/EncodingType");
 var EncoderFactory_1 = require("../encoders/EncoderFactory");
 var FileIO_1 = require("../io/FileIO");
 var term = require('terminal-kit').terminal;
@@ -56,6 +57,9 @@ var DecodeCommand = /** @class */ (function (_super) {
         }
         this.encodingType = headerConfigs.encodingType;
         term.brightMagenta("\nFile encoding type detected: '%s'\n", this.encodingType);
+        if (this.encodingType === EncodingType_1.EncodingType.Golomb) {
+            term.brightMagenta("Divider: '%s'\n", headerConfigs.divider);
+        }
         term.brightCyan("\nDecoding started...\n");
         return new EncoderFactory_1.EncoderFactory().make(headerConfigs, fileData);
     };

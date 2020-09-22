@@ -51,7 +51,7 @@ export class FileIO {
     private readFileData(filepath: string): string[] {
         var stats = this.fs.statSync(filepath)
         var fileSizeInBytes = stats["size"];
-        this.term.bold(`Input file size: ${fileSizeInBytes} bytes\n`);
+        this.term.bold(`\nInput file size: ${fileSizeInBytes} bytes\n`);
         return Array.from(this.fs.readFileSync(filepath, 'utf8'));
     }
 

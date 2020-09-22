@@ -56,6 +56,9 @@ export class DecodeCommand extends AbstractCommand {
     }
     this.encodingType = headerConfigs!.encodingType;
     term.brightMagenta( "\nFile encoding type detected: '%s'\n" ,  this.encodingType );
+    if (this.encodingType === EncodingType.Golomb) {
+      term.brightMagenta( "Divider: '%s'\n" ,  headerConfigs.divider );
+    }
     term.brightCyan( "\nDecoding started...\n" ) ;
     return new EncoderFactory().make(headerConfigs, fileData);
   }

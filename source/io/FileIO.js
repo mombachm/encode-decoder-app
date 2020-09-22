@@ -42,7 +42,7 @@ var FileIO = /** @class */ (function () {
     FileIO.prototype.readFileData = function (filepath) {
         var stats = this.fs.statSync(filepath);
         var fileSizeInBytes = stats["size"];
-        this.term.bold("Input file size: " + fileSizeInBytes + " bytes\n");
+        this.term.bold("\nInput file size: " + fileSizeInBytes + " bytes\n");
         return Array.from(this.fs.readFileSync(filepath, 'utf8'));
     };
     FileIO.prototype.loadHeaderConfigs = function (fileData) {

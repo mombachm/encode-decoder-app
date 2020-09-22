@@ -45,9 +45,9 @@ export class GolombEncoder extends Encoder {
             }
         })
         let encodingBuffer = "";
-        for (let index=0; index < stringBuffer.length - 1; index+=8) {
+        for (let index=0; index < stringBuffer.length; index+=8) {
             const byteString = stringBuffer.substring(index, index+8);
-            const byteStringFixedSize = this.byteStringToFixedSizeZerosLeft(byteString);
+            const byteStringFixedSize = this.byteStringToFixedSizeZeroRight(byteString);
             let byteEncoded = parseInt(byteStringFixedSize,2);
             encodingBuffer += String.fromCharCode(byteEncoded);
         }
@@ -87,7 +87,6 @@ export class GolombEncoder extends Encoder {
                 unaryCounter = 0;
                 stringDecodedBuffer += String.fromCharCode(decodedValue);
             }
-
             unaryCounter++;
         }
         return stringDecodedBuffer;

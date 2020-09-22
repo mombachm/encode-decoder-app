@@ -58,9 +58,9 @@ var GolombEncoder = /** @class */ (function (_super) {
             }
         });
         var encodingBuffer = "";
-        for (var index = 0; index < stringBuffer.length - 1; index += 8) {
+        for (var index = 0; index < stringBuffer.length; index += 8) {
             var byteString = stringBuffer.substring(index, index + 8);
-            var byteStringFixedSize = this.byteStringToFixedSizeZerosLeft(byteString);
+            var byteStringFixedSize = this.byteStringToFixedSizeZeroRight(byteString);
             var byteEncoded = parseInt(byteStringFixedSize, 2);
             encodingBuffer += String.fromCharCode(byteEncoded);
         }

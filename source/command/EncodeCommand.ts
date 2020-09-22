@@ -9,6 +9,7 @@ const term: Terminal = require( 'terminal-kit' ).terminal;
 export class EncodeCommand extends AbstractCommand {
   private filePath: string;
   private encodingType: EncodingType;
+  private divider: number;
 
   constructor(commandArguments: string[]) {
     super(commandArguments);
@@ -57,12 +58,25 @@ export class EncodeCommand extends AbstractCommand {
   private showEncodingTypeSelection() {
     term.brightMagenta("Select a encoding type to start the encoding process:\n")
     term.inputField(
-      ( error: any , input: EncodingType ) => {
-          term.brightMagenta( "\nSelected encoding type: '%s'\n" ,  EncodingTypeNamesMapping[input] ) ;
+      async ( error: any , input: EncodingType ) => {
+          term.brightYellow( "\nSelected encoding type: '%s'\n" ,  EncodingTypeNamesMapping[input] ) ;
           this.encodingType = EncodingTypeNamesMapping[input];
+          if (this.encodingType === EncodingType.Golomb) {
+            term.brightMagenta( "\nSelected the divider for Golomb encoding type: '%s'\n" ,  EncodingTypeNamesMapping[input] ) ;
+            let divider = await this.showEncodingDividerSelectionIfNeeded();
+            if (divider) {
+              this.divider = parseInt(divider);
+            } 
+            if (!divider || this.divider <= 0) {
+              term.red("\nInvalid divider.");
+              term.processExit(1);
+              process.exit(1);
+            }
+            term.brightYellow( "\nSelected divider: '%s'\n" ,  this.divider ) ;
+          }
           const encoder = this.loadEncoder();
           if (!encoder) {
-            term.red( "Invalid encoding type." ) ;
+            term.red("\nInvalid encoding type.");
             term.processExit(1);
             process.exit(1);
           }
@@ -73,11 +87,17 @@ export class EncodeCommand extends AbstractCommand {
     );
   }
 
+  private showEncodingDividerSelectionIfNeeded(): Promise<string | undefined> {
+      return term.inputField({
+        cancelable: true
+      }).promise;
+  }
+
   private loadEncoder(): Encoder | null {
     const fileData = new FileIO().readFileDataForEncoding(this.filePath);
     const headerConfigs = {
         encodingType: this.encodingType,
-        divider: 10
+        divider: this.divider
     };
     return new EncoderFactory().make(headerConfigs, fileData);
   }
