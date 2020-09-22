@@ -1,5 +1,6 @@
 import { HeaderConfigs } from "source/io/FileIO";
 import { DeltaEncoder } from "./DeltaEncoder";
+import { EliasGammaEncoder } from "./EliasGammaEncoder";
 import { Encoder } from "./Encoder";
 import { EncodingType } from "./EncodingType";
 import { FibonnaciEncoder } from "./FibonnaciEncoder";
@@ -17,6 +18,8 @@ export class EncoderFactory {
                 return new GolombEncoder(inputData, headerConfigs.divider);
             case EncodingType.Delta:
                 return new DeltaEncoder(inputData);
+            case EncodingType.EliasGamma:
+                return new EliasGammaEncoder(inputData);
             default:
                 return null;
         }

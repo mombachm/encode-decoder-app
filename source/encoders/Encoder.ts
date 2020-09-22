@@ -35,12 +35,19 @@ export abstract class Encoder {
         return this.byteStringToFixedSizeZerosLeft(n.toString(2), size);
     }
 
-    // protected byteStringToFixedSize(byte: string, size: number = 8) {
-    //     if (byte.length < size) {
-    //         return byte + "0".repeat(8 - byte.length);
-    //     }
-    //     return byte;
-    // }
+    protected byteStringToFixedSizeFromNumberZeroRight(n: number, size: number = 8) {
+        if (n < 0 || n > 255 || n % 1 !== 0) {
+            throw new Error(n + " does not fit in a byte");
+        }
+        return this.byteStringToFixedSizeZeroRight(n.toString(2), size);
+    }
+
+    protected byteStringToFixedSizeZeroRight(byte: string, size: number = 8) {
+        if (byte.length < size) {
+            return byte + "0".repeat(size - byte.length);
+        }
+        return byte;
+    }
 
     protected byteStringToFixedSizeZerosLeft(byte: string, size: number = 8) {
         if (byte.length < size) {

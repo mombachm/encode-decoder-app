@@ -22,12 +22,20 @@ var Encoder = /** @class */ (function () {
         }
         return this.byteStringToFixedSizeZerosLeft(n.toString(2), size);
     };
-    // protected byteStringToFixedSize(byte: string, size: number = 8) {
-    //     if (byte.length < size) {
-    //         return byte + "0".repeat(8 - byte.length);
-    //     }
-    //     return byte;
-    // }
+    Encoder.prototype.byteStringToFixedSizeFromNumberZeroRight = function (n, size) {
+        if (size === void 0) { size = 8; }
+        if (n < 0 || n > 255 || n % 1 !== 0) {
+            throw new Error(n + " does not fit in a byte");
+        }
+        return this.byteStringToFixedSizeZeroRight(n.toString(2), size);
+    };
+    Encoder.prototype.byteStringToFixedSizeZeroRight = function (byte, size) {
+        if (size === void 0) { size = 8; }
+        if (byte.length < size) {
+            return byte + "0".repeat(size - byte.length);
+        }
+        return byte;
+    };
     Encoder.prototype.byteStringToFixedSizeZerosLeft = function (byte, size) {
         if (size === void 0) { size = 8; }
         if (byte.length < size) {
