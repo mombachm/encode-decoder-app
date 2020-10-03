@@ -28,11 +28,11 @@ yarn encode test-files/alice29.txt
 
 Obs: Já existem alguns arquivos de teste na pasta ```test-files``` do projeto.
 - Selecione o tipo de encoding type que deseja utilizar para codificar o arquivo:
-![alt text](https://github.com/mombachm/encoder-decoder-app/edit/master/source/images/encoding-types.png "Encoding Types")
+![encoding-types](https://github.com/mombachm/encoder-decoder-app/blob/master/source/images/encoding-types.png?raw=true "Encoding Types")
 Obs: Para o encoding type Golomb, é necessário informar o divisor utilizado na codificação após a seleção do encoding type.
 
 - Após a seleção do encoding type, o arquivo será codificado e salvo no mesmo diretório do arquivo de origem com a extensão .cod (```<arquivo-origem>.cod```):
-![alt text](https://github.com/mombachm/encoder-decoder-app/edit/master/source/images/encoding-finished.png "Encoding Finished")
+![encoding-finished](https://github.com/mombachm/encoder-decoder-app/blob/master/source/images/encoding-finished.png?raw=true "Encoding Finished")
 
 ##### Decodificação
 - Para codificar um arquivo, na pasta raiz do projeto, executar o seguinte comando via terminal:
@@ -45,7 +45,7 @@ yarn decode test-files/alice29.cod
 ```
 
 - O encoding type do arquivo será detectado através da informação contida no header e será salvo o arquivo decodificado no mesmo diretório do arquivo de origem com a extensão .dec (```<arquivo-origem>.dec```):
-![alt text](https://github.com/mombachm/encoder-decoder-app/edit/master/source/images/decoding.png "Decoding")
+![decoding](https://github.com/mombachm/encoder-decoder-app/blob/master/source/images/decoding.png?raw=true "Decoding")
 
 ________
 #### Dependências Utilizadas:
