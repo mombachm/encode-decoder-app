@@ -6,11 +6,11 @@ ________
 ________
 #### Instalação:
 - faça o clone do repositório: 
-```bash
+```console
 git clone https://github.com/mombachm/encoder-decoder-app.git
 ```
 - execute o comando yarn para instalação de dependências: 
-```bash
+```console
 yarn install
 ```
 ________
@@ -18,11 +18,11 @@ ________
 
 ##### Codificação
 - Para codificar um arquivo, na pasta raiz do projeto, executar o seguinte comando via terminal:
-```bash
+```console
 yarn encode [CAMINHO PARA O ARQUIVO]
 ```
 Exemplo:
-```bash
+```console
 yarn encode test-files/alice29.txt
 ```
 
@@ -43,11 +43,11 @@ yarn encode test-files/alice29.txt
 
 ##### Decodificação
 - Para codificar um arquivo, na pasta raiz do projeto, executar o seguinte comando via terminal:
-```bash
+```console
 yarn decode [CAMINHO PARA O ARQUIVO CODIFICADO]
 ```
 Exemplo:
-```bash
+```console
 yarn decode test-files/alice29.cod
 ```
 
