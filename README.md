@@ -1,8 +1,8 @@
 ### Encoder Decoder
 ________
 #### Pré requisitos:
-- Node
-- yarn
+- **Node**
+- **Yarn**
 ________
 #### Instalação:
 - faça o clone do repositório: 
